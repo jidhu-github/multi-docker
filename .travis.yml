@@ -3,17 +3,17 @@ services:
   - docker
 
 before-install:
-  - docker build -t jidhudocker123/react-test -f ./client/Dockerfile.dev .
+  - docker build -t jidhudocker123/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true jidhudocker123/react-test npm run test
   #- docker run jidhudocker123/docker-react npm run test -- --coverage
   
 after_sucess:
-  - docker build -t jidhudocker123/multi-client -f ./client .
-  - docker build -t jidhudocker123/multi-server -f ./server .
-  - docker build -t jidhudocker123/multi-worker -f ./worker .
-  - docker build -t jidhudocker123/multi-ngnix -f ./ngnix .
+  - docker build -t jidhudocker123/multi-client -f ./client ./client
+  - docker build -t jidhudocker123/multi-server -f ./server ./server
+  - docker build -t jidhudocker123/multi-worker -f ./worker ./worker
+  - docker build -t jidhudocker123/multi-ngnix -f ./ngnix ./ngnix
   #login to docker CLI
   - echo "$docker_pswd" | docker login -u "$docker_username" --password-stdin
   #Push to DockerHub
